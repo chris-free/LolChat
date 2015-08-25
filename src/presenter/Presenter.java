@@ -2,10 +2,9 @@ package presenter;
 
 import javafx.scene.Scene;
 import model.Model;
-import view.ChatSceneFactory;
 import view.LoginSceneFactory;
-import view.SceneFactory;
 import view.View;
+import view.ViewChat;
 
 public class Presenter {
 	private View view;
@@ -25,8 +24,9 @@ public class Presenter {
 	
 	public boolean login(String userName, String password) {
 		if (model.login(userName, password)) {
-			SceneFactory chatFactory = new ChatSceneFactory();
-			Scene scene = chatFactory.create();
+			ViewChat viewChat = new ViewChat();
+			Scene scene = viewChat.getScene();
+			
 			view.primaryStage.setScene(scene);
 			return true;
 		} else {
