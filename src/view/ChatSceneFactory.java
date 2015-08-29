@@ -1,12 +1,15 @@
 package view;
 
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+
+
 
 public class ChatSceneFactory implements SceneFactory {
 
@@ -15,14 +18,31 @@ public class ChatSceneFactory implements SceneFactory {
 	
 	@Override
 	public Scene create() {
-		Group root = new Group();
-		HBox box = new HBox();
-		Text t = new Text("abc");
-		box.getChildren().add(t);
 		
+		Group root = new Group();
 		Scene scene = new Scene(root, 400, 250, Color.WHITE);
-		root.getChildren().add(box);
-		// TODO Auto-generated method stub
+		
+		listView.setPrefSize(200, 250);
+		listView.getSelectionModel()
+				.selectedItemProperty()
+				.addListener((ObservableValue<? extends ListFriend> oValue, ListFriend previousSelected, ListFriend selectedFriend)  -> {
+					if (selectedFriend != null) {
+						TabFactory tabFactory = new TabFactory();
+						Tab t = tabFactory.create(selectedFriend.getFriend());
+						tabPane.getTabs().add(t);
+						
+					}
+				});
+		
+		
+		BorderPane borderPane = new BorderPane();
+		borderPane.prefHeightProperty().bind(scene.heightProperty());
+		borderPane.prefWidthProperty().bind(scene.widthProperty());
+		borderPane.setCenter(tabPane);
+		borderPane.setRight(listView);      
+
+
+		root.getChildren().add(borderPane);
 		return scene;
 	}
 

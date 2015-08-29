@@ -1,6 +1,7 @@
 package view;
 
-import presenter.Presenter;
+import java.util.function.BiFunction;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -16,13 +17,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import presenter.Presenter;
 
 public class LoginSceneFactory implements SceneFactory {
 	
-	private Presenter presenter;
+	private BiFunction <String, String, Boolean> loginFunction;
 	
-	public LoginSceneFactory(Presenter presenter) {
-		this.presenter = presenter;
+	public LoginSceneFactory(BiFunction <String, String, Boolean> presenter) {
+		this.loginFunction = presenter;
 	}
 	
 	public Scene create() {
@@ -67,9 +69,11 @@ public class LoginSceneFactory implements SceneFactory {
 		    @Override
 		    public void handle(ActionEvent e) {
 		    	// Loading animation
-		    	if (!presenter.login(userTextField.getText(), pwBox.getText())) {	    		
+		    	if (!loginFunction.apply(userTextField.getText(), pwBox.getText())) {	    		
 		    		actiontarget.setFill(Color.FIREBRICK);
 		    		actiontarget.setText("Login failed");
+		    		
+
 		    	}
 		    }
 		});

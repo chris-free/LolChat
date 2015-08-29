@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,7 +15,7 @@ import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
 import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
-public class Model {
+public class LoLApi implements Api{
 
 	   private  LolChat api;
 	   
@@ -27,7 +29,8 @@ public class Model {
 	   }
 	   
 	   public ObservableList<Friend> getOnlineFriends() {
-		   return FXCollections.observableArrayList(api.getFriends());
+		   List <Friend> onlineFriends = api.getFriends((Friend f) -> f.isOnline());
+		   return FXCollections.observableArrayList(onlineFriends);
 	   }
 	   
 	   public boolean login(String userName, String password) {
@@ -38,7 +41,7 @@ public class Model {
 			}
 	   }
 	   
-	   public Model() {
+	   public LoLApi() {
 		    api = new LolChat(ChatServer.EUW, FriendRequestPolicy.MANUAL, new RiotApiKey("RIOT-API-KEY", RateLimit.DEFAULT));
 		    
 			api.setFriendRequestListener(new FriendRequestListener() {
