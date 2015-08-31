@@ -25,10 +25,6 @@ public class ViewChat {
 	
 	private FriendListener friendListener;
 	
-	public void selectFriend(Friend friend) {
-		
-	}
-	
 	public Scene getScene() {
 		return scene;
 	}

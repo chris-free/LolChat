@@ -19,7 +19,7 @@ public class Presenter {
 	
 	public void launch () {
 		primaryStage.setTitle("LoL Chat");
-		LoginSceneFactory loginFactory = new LoginSceneFactory((userName, password) -> login(userName, password));
+		LoginSceneFactory loginFactory = new LoginSceneFactory(this::login);
 		Scene loginScene = loginFactory.create();
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
