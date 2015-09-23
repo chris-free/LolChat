@@ -5,8 +5,8 @@ import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import model.Api;
 import model.MockApi;
-import view.LoginSceneFactory;
-import view.ViewChat;
+import view.LoginView;
+import view.ChatView;
 
 public class Presenter {
 	private Stage primaryStage;
@@ -19,15 +19,15 @@ public class Presenter {
 	
 	public void launch () {
 		primaryStage.setTitle("LoL Chat");
-		LoginSceneFactory loginFactory = new LoginSceneFactory(this::login);
-		Scene loginScene = loginFactory.create();
+		LoginView loginFactory = new LoginView(this::login);
+		Scene loginScene = loginFactory.getScene();
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
 	}
 	
 	public boolean login(String userName, String password) {
 		if (model.login(userName, password)) {
-			ViewChat viewChat = new ViewChat(model);
+			ChatView viewChat = new ChatView(model);
 			Scene scene = viewChat.getScene();
 			primaryStage.close(); // Needs otherwise doesn't switch properly, instead can remove/add from the root
 			primaryStage.setScene(scene);

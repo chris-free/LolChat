@@ -3,7 +3,7 @@ package view;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class ListFriend {
-	private Friend friend;
+	private final Friend friend;
 
 	public ListFriend(Friend friend) {
 		this.friend = friend;

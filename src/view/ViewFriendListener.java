@@ -5,10 +5,13 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class ViewFriendListener implements FriendListener{
 
-	private ViewChat viewChat;
+	private TabWrapper tabWrapper;
 	
-	public ViewFriendListener(ViewChat viewChat) {
-		this.viewChat = viewChat;
+	private ListWrapper ListWrapper;
+	
+	public ViewFriendListener(ListWrapper listWrapper, TabWrapper tabWrapper) {
+		this.ListWrapper = listWrapper;
+		this.tabWrapper = tabWrapper;
 	}
 	
 	@Override

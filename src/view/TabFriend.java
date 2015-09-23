@@ -11,16 +11,27 @@ import javafx.scene.text.Text;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
-public class TabFactory {
+public class TabFriend extends Tab{
+	
+	private final Friend friend;
+	
+	public Friend getFriend() {
+		return friend;
+	}
+	
+	// private final GRAPHIC
+	
+	private final Text messageList;
 
-	public Tab create(Friend friend) {
+	public TabFriend(Friend friend) {
 		
-		Tab tab = new Tab();
-		tab.setId("abc");
-		tab.setText(friend.getName());
+		this.friend = friend;	
+		
+		this.setId("abc");
+		this.setText(friend.getName());
 		
 		BorderPane borderPane = new BorderPane();
-		Text t = new Text(10, 20, "");
+		this.messageList = new Text(10, 20, "");
 		
 		HBox hbox = new HBox();
 		
@@ -32,16 +43,15 @@ public class TabFactory {
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
             	String message = chatTextArea.getText();
-                t.setText(t.getText() + "\n" + "You: " + message); 
+                messageList.setText(messageList.getText() + "\n" + "You: " + message); 
                 chatTextArea.setText("");
             }
         });
         
         hbox.getChildren().add(submitButton);
         borderPane.setBottom(hbox);
-        borderPane.setCenter(t);
+        borderPane.setCenter(messageList);
         
-        tab.setContent(borderPane);
-		return tab;
+        this.setContent(borderPane);
 	}
 }
