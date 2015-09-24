@@ -27,20 +27,8 @@ public class ChatView {
 	
 	private Scene scene;
 	
-	private ChatListener chatListener;
-	
-	private FriendListener friendListener;
-	
 	public Scene getScene() {
 		return scene;
-	}
-	
-	public ChatListener getChatListener() {
-		return chatListener;
-	}
-	
-	public FriendListener getFriendListener() {
-		return friendListener;
 	}
 	
 	public ChatView(Api lolApi) {
@@ -49,6 +37,8 @@ public class ChatView {
 		
 		this.listWrapper = new ListWrapper(listView);
 		this.tabWrapper = new TabWrapper(tabPane);
+		
+		lolApi.setChatListener(new ViewChatListener(tabWrapper));
 		
 		
 		List <ListFriend> listFriends = lolApi

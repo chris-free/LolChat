@@ -19,11 +19,11 @@ public class LoLApi implements Api{
 
 	   private  LolChat api;
 	   
-	   public void addChatListener(ChatListener chatListener) {
+	   public void setChatListener(ChatListener chatListener) {
 		   api.addChatListener(chatListener);
 	   }
 	   
-	   public void addFriendListener(FriendListener friendListener) {
+	   public void setFriendListener(FriendListener friendListener) {
 		   api.addFriendListener(friendListener);
 		   
 	   }

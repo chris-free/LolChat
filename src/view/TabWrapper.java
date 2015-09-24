@@ -13,7 +13,7 @@ public class TabWrapper {
 		this.tabPane = tabPane;
 	}
 
-	public Tab get(Friend f) {
+	public TabFriend get(Friend f) {
 		return contains(f) ? find(f) : create(f);
 	}
 

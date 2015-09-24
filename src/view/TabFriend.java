@@ -30,7 +30,7 @@ public class TabFriend extends Tab{
 	
 	public void incomingMessage(String userName, String message) {
 		if (!isSelected()) {
-			circleGraphic.setFill(Color.RED);
+			textGraphic.setFill(Color.ORANGE);
 		}
 		
 		messageList.setText(messageList.getText() 
@@ -40,22 +40,29 @@ public class TabFriend extends Tab{
 				+ message); 
 	}
 	
-	public void clearTabNotification() {
+	public void clearMessageNotification() {
 		textGraphic.setFill(Color.BLACK);
+	}
+	
+	public void setAvailable() {
+		circleGraphic.setFill(Color.GREEN);
+	}
+	
+	public void setUnavailable() {
+		circleGraphic.setFill(Color.RED);
 	}
 
 	public TabFriend(Friend friend) {
 		this.friend = friend;	
 
 		this.setOnSelectionChanged((Event value) 
-				-> (((TabFriend) value.getTarget()).clearTabNotification()));						
+				-> (((TabFriend) value.getTarget()).clearMessageNotification()));						
 		
 		this.setId("abc");
 
 		this.messageList = new Text(10, 20, "");
 
-
-		circleGraphic = new Circle(0, 0, 5, Color.YELLOW);
+		circleGraphic = new Circle(0, 0, 5, Color.GREY);
 		textGraphic = new Text(" " + friend.getName());
 		HBox graphicBox = new HBox();
 		graphicBox.getChildren().add(circleGraphic);

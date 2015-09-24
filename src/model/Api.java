@@ -8,8 +8,8 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public interface Api {
 
-	   public void addChatListener(ChatListener chatListener);
-	   public void addFriendListener(FriendListener friendListener) ;	   
+	   public void setChatListener(ChatListener chatListener);
+	   public void setFriendListener(FriendListener friendListener) ;	   
 	   public ObservableList<Friend> getOnlineFriends();
 	   public boolean login(String userName, String password);
 	   
