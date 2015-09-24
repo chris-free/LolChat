@@ -58,21 +58,17 @@ public class ChatView {
 				.collect(Collectors.toList());
 		
 		listView.setItems(FXCollections.observableArrayList(listFriends));
-		
+		listView.setPrefSize(200, 250);
 		
 		Group root = new Group();
 		scene = new Scene(root, 400, 250, Color.WHITE);
 		
-		listView.setPrefSize(200, 250);
 		listView.getSelectionModel()
 				.selectedItemProperty()
 				.addListener((ObservableValue<? extends ListFriend> oValue, ListFriend previousSelected, ListFriend selected)  -> {
 					if (selected != null) {
 						Friend selectedFriend = selected.getFriend();
-						if (!tabWrapper.contains(selectedFriend)) {
-						  TabFriend tab = new TabFriend(selectedFriend);
-						  tabWrapper.add(tab);
-						}
+						tabWrapper.select(selectedFriend);
 					}
 				});
 		
@@ -95,7 +91,6 @@ public class ChatView {
 		borderPane.prefWidthProperty().bind(scene.widthProperty());
 		borderPane.setCenter(tabPane);
 		borderPane.setRight(listView);      
-
 
 		root.getChildren().add(borderPane);
 	}

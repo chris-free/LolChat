@@ -1,33 +1,46 @@
 package view;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class TabWrapper {
-	
+
 	private TabPane tabPane;
-	
+
 	public TabWrapper (TabPane tabPane) {
 		this.tabPane = tabPane;
 	}
-	
-	// Contains/ getTab/ addTab/
-	public Tab getTab(Friend f) {
-		return tabPane.getTabs().stream().filter(t -> ((TabFriend) t).getFriend().getUserId() == f.getUserId()).findFirst().get();
+
+	public Tab get(Friend f) {
+		return contains(f) ? find(f) : create(f);
 	}
-	
-	public boolean contains(Friend f) {
+
+	private TabFriend create(Friend f) {
+		TabFriend t = new TabFriend(f);
+		tabPane.getTabs().add(t);
+		return t;
+	}
+
+	private TabFriend find(Friend f) {
+		return (TabFriend) tabPane
+				.getTabs()
+				.stream()
+				.filter(t -> ((TabFriend) t).getFriend().getUserId() == f.getUserId())
+				.findFirst()
+				.get();
+	}
+
+	private boolean contains(Friend f) {
 		return tabPane
 				.getTabs()
 				.stream()
 				.anyMatch(t -> ((TabFriend) t).getFriend().getUserId() == f.getUserId());
 	}
-	
-	public void add(Tab t) {
-	       tabPane.getTabs().add(t);
+
+	public void select(Friend f) {
+		Tab tab = get(f);
+		tabPane.getSelectionModel().select(tab);
 	}
-	
 }
