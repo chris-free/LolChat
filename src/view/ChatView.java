@@ -35,9 +35,9 @@ public class ChatView {
 		return scene;
 	}
 
-	static class ColorRectCell extends ListCell<ListFriend> {
+	static class ColorRectCell extends ListCell<Summoner> {
 		@Override
-		public void updateItem(ListFriend item, boolean empty) {
+		public void updateItem(Summoner item, boolean empty) {
 			super.updateItem(item, empty);
 			if (item != null) {
 				HBox box = new HBox();
@@ -51,15 +51,15 @@ public class ChatView {
 
 	public ChatView(Api lolApi) {
 		TabPane tabPane = new TabPane();
-		ListView<ListFriend> listView = new ListView<ListFriend>();
+		ListView<Summoner> listView = new ListView<Summoner>();
 
 		this.listWrapper = new ListWrapper(listView);
 		this.tabWrapper = new TabWrapper(tabPane);
 
-		List <ListFriend> listFriends = lolApi
+		List <Summoner> listFriends = lolApi
 				.getOnlineFriends()
 				.stream()
-				.map(i -> new ListFriend(i))
+				.map(i -> new Summoner(i))
 				.collect(Collectors.toList());
 
 		List <Summoner> summoners = lolApi.getSummoners();
@@ -79,9 +79,9 @@ public class ChatView {
 
 		listView.setItems(FXCollections.observableArrayList(listFriends));
 		listView.setPrefSize(200, 250);
-		listView.setCellFactory(new Callback<ListView<ListFriend>, ListCell<ListFriend>>() {
+		listView.setCellFactory(new Callback<ListView<Summoner>, ListCell<Summoner>>() {
 			@Override 
-			public ListCell<ListFriend> call(ListView<ListFriend> list) {
+			public ListCell<Summoner> call(ListView<Summoner> list) {
 				return new ColorRectCell();
 			}});
 
@@ -90,7 +90,7 @@ public class ChatView {
 
 		listView.getSelectionModel()
 		.selectedItemProperty()
-		.addListener((ObservableValue<? extends ListFriend> oValue, ListFriend previousSelected, ListFriend selected)  -> {
+		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected)  -> {
 			if (selected != null) {
 				Friend selectedFriend = selected.getFriend();
 				tabWrapper.select(selectedFriend);

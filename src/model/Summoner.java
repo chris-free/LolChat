@@ -28,4 +28,8 @@ public class Summoner {
 		friend.setChatListener(listener);
 	}
 	
+	public Friend getFriend() {
+		return friend;
+	}
+	
 }

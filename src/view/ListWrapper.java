@@ -3,14 +3,15 @@ package view;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
+import model.Summoner;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class ListWrapper {
 
-	private ListView <ListFriend> listView;
+	private ListView <Summoner> listView;
 
-	public ListWrapper (ListView<ListFriend> listView) {
+	public ListWrapper (ListView<Summoner> listView) {
 		this.listView = listView;
 	}
 
@@ -22,8 +23,8 @@ public class ListWrapper {
 				.findFirst();
 
 		if (opt.isPresent()) {
-			ListFriend listFriend = (ListFriend) opt.get();
-			listView.getSelectionModel().select(listFriend);
+			Summoner summoner = (Summoner) opt.get();
+			listView.getSelectionModel().select(summoner);
 		}
 	}
 }
