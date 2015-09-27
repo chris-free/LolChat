@@ -5,7 +5,7 @@ import java.util.List;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
-public class SummonerFriendListener implements FriendListener{
+public class SummonerFriendListener implements FriendListener {
 	private List <Summoner> summoners;
 	
 	public SummonerFriendListener(List <Summoner> summoners) {

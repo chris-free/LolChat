@@ -7,31 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.mockito.Mockito;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
-import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 
 public class MockApi implements Api {
 
 	private List <MockSummoner> summoners;
-
-	@Override
-	public void setChatListener(ChatListener chatListener) {
-
-		this.chatListener = chatListener;
-	}
-
-	@Override
-	public void setFriendListener(FriendListener friendListener) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public ObservableList<Friend> getOnlineFriends() {

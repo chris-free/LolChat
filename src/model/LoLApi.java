@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import com.github.theholywaffle.lolchatapi.ChatServer;
 import com.github.theholywaffle.lolchatapi.FriendRequestPolicy;
 import com.github.theholywaffle.lolchatapi.LolChat;
-import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.listeners.FriendRequestListener;
 import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
@@ -19,12 +18,6 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 public class LoLApi implements Api{
 
 	private  LolChat api;
-
-	public void setChatListener(ChatListener chatListener) {
-	}
-
-	public void setFriendListener(FriendListener friendListener) {
-	}
 
 	@Override
 	public List<Summoner> getSummoners() {
