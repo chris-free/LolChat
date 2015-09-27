@@ -21,23 +21,12 @@ public class LoLApi implements Api{
 
 	@Override
 	public List<Summoner> getSummoners() {
-		// TODO Auto-generated method stub
-		return null;
+		return api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toList());
 	}
 	
-	public ObservableList<Friend> getOnlineFriends() {
-		List <Friend> onlineFriends = api.getFriends((Friend f) -> f.isOnline());
-		return FXCollections.observableArrayList(onlineFriends);
-	}
-
 	public boolean login(String userName, String password) {
 		if (api.login(userName, password)) {
-			List <Summoner> summoners = api.getFriends()
-					.stream()
-					.map(i -> new Summoner(i))
-					.collect(Collectors.toList());
-
-			FriendListener viewFriendListener = new SummonerFriendListener(summoners);
+			FriendListener viewFriendListener = new SummonerFriendListener(getSummoners());
 			api.addFriendListener(viewFriendListener);
 			return true;
 		} else {

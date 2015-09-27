@@ -17,8 +17,7 @@ public class MockApi implements Api {
 
 	private List <MockSummoner> summoners;
 
-	@Override
-	public ObservableList<Friend> getOnlineFriends() {
+	public  MockApi() {
 		// TODO Auto-generated method stub
 
 		Friend f1 = mock(Friend.class);
@@ -66,8 +65,6 @@ public class MockApi implements Api {
 		arraylist.add(f6);
 		arraylist.add(f7);
 
-		ObservableList<Friend> listfriends = FXCollections.observableArrayList(arraylist);
-		
 		summoners = arraylist.stream().map(i -> new MockSummoner(i)).collect(Collectors.toList());
 
 		Thread t = new Thread(() 
@@ -86,8 +83,6 @@ public class MockApi implements Api {
 				});
 		t.start();
 
-
-		return listfriends;
 	}
 
 	@Override

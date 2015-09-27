@@ -4,8 +4,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Api;
 import model.MockApi;
-import view.LoginView;
 import view.ChatView;
+import view.LoginView;
 
 public class Presenter {
 	private Stage primaryStage;

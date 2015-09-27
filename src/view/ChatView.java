@@ -54,12 +54,6 @@ public class ChatView {
 		this.listWrapper = new ListWrapper(listView);
 		this.tabWrapper = new TabWrapper(tabPane);
 
-		List <Summoner> listFriends = lolApi
-				.getOnlineFriends()
-				.stream()
-				.map(i -> new Summoner(i))
-				.collect(Collectors.toList());
-
 		List <Summoner> summoners = lolApi.getSummoners();
 
 		for (Summoner sum : summoners) {
@@ -74,7 +68,7 @@ public class ChatView {
 						}});
 		};
 
-		listView.setItems(FXCollections.observableArrayList(listFriends));
+		listView.setItems(FXCollections.observableArrayList(summoners));
 		listView.setPrefSize(200, 250);
 		listView.setCellFactory(new Callback<ListView<Summoner>, ListCell<Summoner>>() {
 			@Override 
