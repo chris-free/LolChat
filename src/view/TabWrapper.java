@@ -32,7 +32,7 @@ public class TabWrapper {
 				.get();
 	}
 
-	private boolean contains(Friend f) {
+	public boolean contains(Friend f) {
 		return tabPane
 				.getTabs()
 				.stream()

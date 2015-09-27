@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 import javafx.collections.ObservableList;
 
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
@@ -12,5 +14,5 @@ public interface Api {
 	   public void setFriendListener(FriendListener friendListener) ;	   
 	   public ObservableList<Friend> getOnlineFriends();
 	   public boolean login(String userName, String password);
-	   
+	   public List <Summoner> getSummoners();
 }

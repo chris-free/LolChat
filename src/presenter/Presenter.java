@@ -33,20 +33,6 @@ public class Presenter {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-
-			new Thread() {
-				public void run() {
-					try {
-						Thread.sleep(10000);
-						System.out.println(scene.lookup("#abc"));
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					System.out.print(1);
-				}
-			}.start();
-			
 			return true;
 		} else {
 			return false;

@@ -5,6 +5,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.mockito.Mockito;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,14 +20,13 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 public class MockApi implements Api {
 
 	private ChatListener chatListener;
+	
+	private List <MockSummoner> summoners;
 
 	@Override
 	public void setChatListener(ChatListener chatListener) {
 
 		this.chatListener = chatListener;
-
-
-
 	}
 
 	@Override
@@ -69,7 +71,8 @@ public class MockApi implements Api {
 		when(f5.isOnline()).thenReturn(true);
 		when(f6.isOnline()).thenReturn(true);
 		when(f7.isOnline()).thenReturn(true);
-
+		
+	//	when(f7.setChatListener(Mockito.any(ChatListener.class)));
 
 		ArrayList <Friend> arraylist = new ArrayList<Friend>();
 
@@ -82,20 +85,16 @@ public class MockApi implements Api {
 		arraylist.add(f7);
 
 		ObservableList<Friend> listfriends = FXCollections.observableArrayList(arraylist);
+		
+		summoners = arraylist.stream().map(i -> new MockSummoner(i)).collect(Collectors.toList());
 
 		Thread t = new Thread(() 
 				-> {
 
-					System.out.println(1123);
-					List <Friend> li = new ArrayList <Friend>();
-					li.add(f1);
-					li.add(f2);
-					li.add(f3);
-					li.add(f4);
-					for (Friend f : li) {
+					for (MockSummoner sum : summoners) {
 						try {
 							Thread.sleep(2000);
-							chatListener.onMessage(f, "boop");
+							sum.onMessage(sum.getFriend(), "boop");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -112,6 +111,12 @@ public class MockApi implements Api {
 	@Override
 	public boolean login(String userName, String password) {
 		return true;
+	}
+
+	@Override
+	public List<Summoner> getSummoners() {
+		// TODO Auto-generated method stub
+		return summoners.stream().map(i -> (Summoner) i).collect(Collectors.toList());
 	}
 
 }

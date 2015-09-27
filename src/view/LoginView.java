@@ -22,8 +22,8 @@ public class LoginView implements SceneFactory {
 	
 	private BiFunction <String, String, Boolean> loginFunction;
 	
-	public LoginView(BiFunction <String, String, Boolean> presenter) {
-		this.loginFunction = presenter;
+	public LoginView(BiFunction <String, String, Boolean> loginFunction) {
+		this.loginFunction = loginFunction;
 	}
 	
 	public Scene getScene() {
