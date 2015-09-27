@@ -11,12 +11,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import model.Summoner;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class TabFriend extends Tab{
 
-	private final Friend friend;
+	private final Summoner summoner;
 
 	private final Text messageList;
 
@@ -24,8 +25,8 @@ public class TabFriend extends Tab{
 	
 	private final Text textGraphic;
 	
-	public Friend getFriend() {
-		return friend;
+	public Summoner getSummoner() {
+		return summoner;
 	}
 	
 	public void incomingMessage(String userName, String message) {
@@ -52,8 +53,8 @@ public class TabFriend extends Tab{
 		circleGraphic.setFill(Color.RED);
 	}
 
-	public TabFriend(Friend friend) {
-		this.friend = friend;	
+	public TabFriend(Summoner summoner) {
+		this.summoner = summoner;	
 
 		this.setOnSelectionChanged((Event value) 
 				-> (((TabFriend) value.getTarget()).clearMessageNotification()));						
@@ -63,7 +64,7 @@ public class TabFriend extends Tab{
 		this.messageList = new Text(10, 20, "");
 
 		circleGraphic = new Circle(0, 0, 5, Color.GREY);
-		textGraphic = new Text(" " + friend.getName());
+		textGraphic = new Text(" " + summoner.getName());
 		HBox graphicBox = new HBox();
 		graphicBox.getChildren().add(circleGraphic);
 		graphicBox.getChildren().add(textGraphic);

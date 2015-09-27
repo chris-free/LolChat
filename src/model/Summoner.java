@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
@@ -24,12 +25,20 @@ public class Summoner {
 		presenceConsumers.add(o);
 	}
 
-	public void registerChatObserver(ChatListener listener) {
-		friend.setChatListener(listener);
+	public void registerChatObserver(BiConsumer<Summoner, String> listener) {
+		friend.setChatListener((Friend friend, String message) ->  listener.accept(this, message));
 	}
 	
 	public Friend getFriend() {
 		return friend;
+	}
+	
+	public String getUserId() {
+		return friend.getUserId();
+	}
+	
+	public String getName() {
+		return friend.getName();
 	}
 	
 }

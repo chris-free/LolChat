@@ -65,16 +65,15 @@ public class ChatView {
 		List <Summoner> summoners = lolApi.getSummoners();
 
 		for (Summoner sum : summoners) {
-			sum.registerChatObserver(new com.github.theholywaffle.lolchatapi.listeners.ChatListener(){
-				public void onMessage(Friend friend, String message) {
-					if (message != null) {
-						System.out.println(message);
-						Platform.runLater(() -> {
-							TabFriend tab = tabWrapper.get(friend);
-							tab.incomingMessage(friend.getName(), message);
-						});
-					}
-				}});
+			sum.registerChatObserver((Summoner summoner, String message)
+					-> {
+						if (message != null) {
+							System.out.println(message);
+							Platform.runLater(() -> {
+								TabFriend tab = tabWrapper.get(summoner);
+								tab.incomingMessage(summoner.getName(), message);
+							});
+						}});
 		};
 
 		listView.setItems(FXCollections.observableArrayList(listFriends));
@@ -90,19 +89,19 @@ public class ChatView {
 
 		listView.getSelectionModel()
 		.selectedItemProperty()
-		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected)  -> {
-			if (selected != null) {
-				Friend selectedFriend = selected.getFriend();
-				tabWrapper.select(selectedFriend);
-			}
-		});
+		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected) 
+				-> {
+					if (selected != null) {
+						tabWrapper.select(selected);
+					}
+				});
 
 		tabPane.getSelectionModel().selectedItemProperty().addListener(
 				new ChangeListener<Tab>() {
 					@Override
 					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
 						if (t1 != null) {
-							Friend selectedFriend =  ((TabFriend) t1).getFriend();
+							Summoner selectedFriend =  ((TabFriend) t1).getSummoner();
 							listWrapper.select(selectedFriend);
 						}
 

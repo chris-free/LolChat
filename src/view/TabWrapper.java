@@ -2,8 +2,7 @@ package view;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-
-import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+import model.Summoner;
 
 public class TabWrapper {
 
@@ -13,33 +12,33 @@ public class TabWrapper {
 		this.tabPane = tabPane;
 	}
 
-	public TabFriend get(Friend f) {
+	public TabFriend get(Summoner f) {
 		return contains(f) ? find(f) : create(f);
 	}
 
-	private TabFriend create(Friend f) {
+	private TabFriend create(Summoner f) {
 		TabFriend t = new TabFriend(f);
 		tabPane.getTabs().add(t);
 		return t;
 	}
 
-	private TabFriend find(Friend f) {
+	private TabFriend find(Summoner f) {
 		return (TabFriend) tabPane
 				.getTabs()
 				.stream()
-				.filter(t -> ((TabFriend) t).getFriend().getUserId() == f.getUserId())
+				.filter(t -> ((TabFriend) t).getSummoner().getUserId() == f.getUserId())
 				.findFirst()
 				.get();
 	}
 
-	public boolean contains(Friend f) {
+	public boolean contains(Summoner f) {
 		return tabPane
 				.getTabs()
 				.stream()
-				.anyMatch(t -> ((TabFriend) t).getFriend().getUserId() == f.getUserId());
+				.anyMatch(t -> ((TabFriend) t).getSummoner().getUserId() == f.getUserId());
 	}
 
-	public void select(Friend f) {
+	public void select(Summoner f) {
 		Tab tab = get(f);
 		tabPane.getSelectionModel().select(tab);
 	}

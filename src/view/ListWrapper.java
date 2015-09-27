@@ -15,16 +15,16 @@ public class ListWrapper {
 		this.listView = listView;
 	}
 
-	public void select(Friend friend) {
+	public void select(Summoner summoner) {
 
-		Optional opt = listView.getItems()
+		listView.getSelectionModel().select(summoner);
+/*		Optional opt = listView.getItems()
 				.stream()
-				.filter(x -> (x.getFriend() == friend))
+				.filter(x -> (x == friend))
 				.findFirst();
 
 		if (opt.isPresent()) {
 			Summoner summoner = (Summoner) opt.get();
-			listView.getSelectionModel().select(summoner);
 		}
-	}
+*/	}
 }

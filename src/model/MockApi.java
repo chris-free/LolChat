@@ -94,7 +94,7 @@ public class MockApi implements Api {
 					for (MockSummoner sum : summoners) {
 						try {
 							Thread.sleep(2000);
-							sum.onMessage(sum.getFriend(), "boop");
+							sum.onMessage(sum, "boop");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

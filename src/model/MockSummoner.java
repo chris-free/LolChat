@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
@@ -16,16 +17,16 @@ public class MockSummoner extends Summoner {
 		// TODO Auto-generated constructor stub
 	}
 	
-	private List<ChatListener> chatListenerList = new ArrayList<ChatListener>();
+	private List<BiConsumer<Summoner, String> > chatListenerList = new ArrayList<BiConsumer<Summoner, String> >();
 
 	@Override
-	public void registerChatObserver(ChatListener listener) {
+	public void registerChatObserver(BiConsumer<Summoner, String> listener) {
         chatListenerList.add(listener);
 	}
 
-	public void onMessage(Friend friend, String message) {
-		for (ChatListener listener: chatListenerList) {
-			listener.onMessage(friend, message);
+	public void onMessage(Summoner summoner, String message) {
+		for (BiConsumer<Summoner, String>  listener: chatListenerList) {
+			listener.accept(summoner, message);
 		}
 	}
 	
