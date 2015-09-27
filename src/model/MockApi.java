@@ -19,8 +19,6 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class MockApi implements Api {
 
-	private ChatListener chatListener;
-	
 	private List <MockSummoner> summoners;
 
 	@Override

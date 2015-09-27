@@ -13,8 +13,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import model.Summoner;
 
-import com.github.theholywaffle.lolchatapi.wrapper.Friend;
-
 public class TabFriend extends Tab{
 
 	private final Summoner summoner;

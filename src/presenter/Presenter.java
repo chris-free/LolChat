@@ -1,7 +1,6 @@
 package presenter;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import model.Api;
 import model.MockApi;

@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class Summoner {

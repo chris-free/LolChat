@@ -21,8 +21,6 @@ import javafx.util.Callback;
 import model.Api;
 import model.Summoner;
 
-import com.github.theholywaffle.lolchatapi.wrapper.Friend;
-
 public class ChatView {
 
 	private ListWrapper listWrapper;
