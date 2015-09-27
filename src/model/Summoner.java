@@ -28,6 +28,11 @@ public class Summoner {
 		friend.setChatListener((Friend friend, String message) ->  listener.accept(this, message));
 	}
 	
+	public void sendMessage(String message) {
+		friend.sendMessage(message);
+		System.out.println("sending " + message);
+	}
+	
 	public Friend getFriend() {
 		return friend;
 	}

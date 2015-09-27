@@ -60,7 +60,7 @@ public class TabFriend extends Tab{
 		this.setId("abc");
 
 		this.messageList = new Text(10, 20, "");
-
+		
 		circleGraphic = new Circle(0, 0, 5, Color.GREY);
 		textGraphic = new Text(" " + summoner.getName());
 		HBox graphicBox = new HBox();
@@ -82,6 +82,7 @@ public class TabFriend extends Tab{
 						+ "You: " 
 						+ message); 
 				chatTextArea.setText("");
+				summoner.sendMessage(message);
 			}
 		});
 
