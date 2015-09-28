@@ -37,7 +37,6 @@ public class LoginView implements SceneFactory {
 		
 		scene = new Scene(grid, 400, 250, Color.WHITE);
 		
-		
 		Text scenetitle = new Text("Welcome");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
