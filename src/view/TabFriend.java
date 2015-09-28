@@ -50,6 +50,10 @@ public class TabFriend extends Tab{
 	public void setUnavailable() {
 		circleGraphic.setFill(Color.RED);
 	}
+	
+	public void updatePresence() {
+		System.out.println(summoner.getName() + " is PRESENCED");
+	}
 
 	public TabFriend(Summoner summoner) {
 		this.summoner = summoner;	
@@ -60,6 +64,8 @@ public class TabFriend extends Tab{
 		this.setId("abc");
 
 		this.messageList = new Text(10, 20, "");
+		
+		summoner.registerPresenceObserver(this::updatePresence);
 		
 		circleGraphic = new Circle(0, 0, 5, Color.GREY);
 		textGraphic = new Text(" " + summoner.getName());
