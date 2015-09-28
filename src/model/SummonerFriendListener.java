@@ -15,7 +15,7 @@ public class SummonerFriendListener implements FriendListener {
 	}
 	
 	public void notifyPresence(Friend friend) {
-		summoners.get(friend).notifyPresenceObservers();
+		summoners.get(friend.getUserId()).notifyPresenceObservers();
 	}
 	
 	@Override
