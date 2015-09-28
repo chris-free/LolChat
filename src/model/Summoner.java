@@ -46,7 +46,4 @@ public class Summoner {
 		return friend.getName();
 	}
 	
-	public void reset() {
-		presenceConsumers.removeAll(presenceConsumers);
-	}
 }

@@ -18,15 +18,27 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 public class LoLApi implements Api{
 
 	private  LolChat api;
+	
+	private FriendListener viewFriendListener;
+	
+	private List<Summoner> summoners;
 
+	public void reset() {
+		api.removeFriendListener(viewFriendListener);
+		summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toList());
+		viewFriendListener = new SummonerFriendListener(summoners);
+		api.addFriendListener(viewFriendListener);
+	}
+	
 	@Override
 	public List<Summoner> getSummoners() {
-		return api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toList());
+		return this.summoners;
 	}
 	
 	public boolean login(String userName, String password) {
 		if (api.login(userName, password)) {
-			FriendListener viewFriendListener = new SummonerFriendListener(getSummoners());
+			summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toList());
+			viewFriendListener = new SummonerFriendListener(summoners);
 			api.addFriendListener(viewFriendListener);
 			return true;
 		} else {

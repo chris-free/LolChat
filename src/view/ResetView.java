@@ -18,9 +18,7 @@ public class ResetView {
 	public ResetView (Stage primaryStage, Api model) {
 		
 		reset = () -> {
-			for ( Summoner sum : model.getSummoners()) {
-				sum.reset();
-			}
+			model.reset();
 			ChatView viewChat = new ChatView(model);
 			Scene scene = viewChat.getScene();
 			primaryStage.close(); // Needs otherwise doesn't switch properly, instead can remove/add from the root

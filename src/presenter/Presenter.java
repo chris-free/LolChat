@@ -3,7 +3,7 @@ package presenter;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Api;
-import model.MockApi;
+import model.LoLApi;
 import view.ChatView;
 import view.LoginView;
 import view.ResetView;

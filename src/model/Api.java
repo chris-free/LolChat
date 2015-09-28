@@ -9,4 +9,5 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 public interface Api {
 	   public boolean login(String userName, String password);
 	   public List <Summoner> getSummoners();
+	   public void reset();
 }

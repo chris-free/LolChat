@@ -96,4 +96,10 @@ public class MockApi implements Api {
 		return summoners.stream().map(i -> (Summoner) i).collect(Collectors.toList());
 	}
 
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -70,8 +70,6 @@ public class LoginView implements SceneFactory {
 		    	if (!loginFunction.apply(userTextField.getText(), pwBox.getText())) {	    		
 		    		actiontarget.setFill(Color.FIREBRICK);
 		    		actiontarget.setText("Login failed");
-		    		
-
 		    	}
 		    }
 		});
