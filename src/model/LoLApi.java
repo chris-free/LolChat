@@ -20,11 +20,11 @@ public class LoLApi implements Api{
 	
 	private FriendListener viewFriendListener;
 	
-	private Map<Friend, Summoner> summoners;
+	private Map<String, Summoner> summoners;
 
 	public void reset() {
 		api.removeFriendListener(viewFriendListener);
-		summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toMap(Summoner::getFriend, Function.identity()));
+		summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toMap(Summoner::getUserId, Function.identity()));
 		viewFriendListener = new SummonerFriendListener(summoners);
 		api.addFriendListener(viewFriendListener);
 	}
@@ -36,7 +36,7 @@ public class LoLApi implements Api{
 	
 	public boolean login(String userName, String password) {
 		if (api.login(userName, password)) {
-			summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toMap(Summoner::getFriend, Function.identity()));
+			summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toMap(Summoner::getUserId, Function.identity()));
 			viewFriendListener = new SummonerFriendListener(summoners);
 			api.addFriendListener(viewFriendListener);
 			return true;
