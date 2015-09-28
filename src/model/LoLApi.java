@@ -1,10 +1,9 @@
 package model;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import com.github.theholywaffle.lolchatapi.ChatServer;
 import com.github.theholywaffle.lolchatapi.FriendRequestPolicy;
@@ -21,23 +20,23 @@ public class LoLApi implements Api{
 	
 	private FriendListener viewFriendListener;
 	
-	private List<Summoner> summoners;
+	private Map<Friend, Summoner> summoners;
 
 	public void reset() {
 		api.removeFriendListener(viewFriendListener);
-		summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toList());
+		summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toMap(Summoner::getFriend, Function.identity()));
 		viewFriendListener = new SummonerFriendListener(summoners);
 		api.addFriendListener(viewFriendListener);
 	}
 	
 	@Override
 	public List<Summoner> getSummoners() {
-		return this.summoners;
+		return summoners.values().stream().collect(Collectors.toList());
 	}
 	
 	public boolean login(String userName, String password) {
 		if (api.login(userName, password)) {
-			summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toList());
+			summoners = api.getFriends().stream().map(i -> new Summoner(i)).collect(Collectors.toMap(Summoner::getFriend, Function.identity()));
 			viewFriendListener = new SummonerFriendListener(summoners);
 			api.addFriendListener(viewFriendListener);
 			return true;
