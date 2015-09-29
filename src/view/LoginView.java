@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class LoginView implements SceneFactory {
+public class LoginView {
 	
 	private BiFunction <String, String, Boolean> loginFunction;
 	
