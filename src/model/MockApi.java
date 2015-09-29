@@ -9,6 +9,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.github.theholywaffle.lolchatapi.ChatMode;
+import com.github.theholywaffle.lolchatapi.LolStatus;
+import com.github.theholywaffle.lolchatapi.LolStatus.GameStatus;
+import com.github.theholywaffle.lolchatapi.LolStatus.Queue;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 
@@ -72,6 +75,15 @@ public class MockApi implements Api {
 			when(sum.getFriend().getChatMode()).thenReturn(c);
 		}
 		
+		for (Summoner sum: summoners) {
+			Friend f = sum.getFriend();
+			LolStatus status = mock(LolStatus.class);
+			when(f.getStatus()).thenReturn(status);
+			Random rEnum = new Random();
+			GameStatus q = GameStatus.values()[rEnum.nextInt(GameStatus.values().length)];
+			when(status.getGameStatus()).thenReturn(q);
+		}
+		
 		
 		
 		Thread t = new Thread(new Runnable(){
@@ -85,7 +97,7 @@ public class MockApi implements Api {
 							System.out.println("Trying: " + sum.getName());
 
 							Random rEnum = new Random();
-							ChatMode c = ChatMode.values()[r.nextInt(ChatMode.values().length)];
+							ChatMode c = ChatMode.values()[rEnum.nextInt(ChatMode.values().length)];
 							
 							when(sum.getFriend().getChatMode()).thenReturn(c);
 							
