@@ -6,7 +6,6 @@ import model.Api;
 import model.LoLApi;
 import view.ChatView;
 import view.LoginView;
-import view.ResetView;
 
 public class Presenter {
 	private Stage primaryStage;
@@ -33,8 +32,8 @@ public class Presenter {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			ResetView reset = new ResetView(primaryStage, model);
-			reset.show();
+		//	ResetView reset = new ResetView(primaryStage, model);
+			//reset.show();
 			
 			return true;
 		} else {
