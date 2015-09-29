@@ -5,11 +5,10 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 
@@ -67,20 +66,38 @@ public class MockApi implements Api {
 
 		summoners = arraylist.stream().map(i -> new MockSummoner(i)).collect(Collectors.toList());
 
-		Thread t = new Thread(() 
-				-> {
-
-					for (MockSummoner sum : summoners) {
+		for (Summoner sum: summoners) {
+			Random rEnum = new Random();
+			ChatMode c = ChatMode.values()[rEnum.nextInt(ChatMode.values().length)];
+			when(sum.getFriend().getChatMode()).thenReturn(c);
+		}
+		
+		
+		
+		Thread t = new Thread(new Runnable(){
+			
+			public void run() {
+					for (int i = 0; i < 100; i++) {
 						try {
+							Random r = new Random();
+							int index = r.nextInt(summoners.size());
+							Summoner sum = summoners.get(index);
+							System.out.println("Trying: " + sum.getName());
+
+							Random rEnum = new Random();
+							ChatMode c = ChatMode.values()[r.nextInt(ChatMode.values().length)];
+							
+							when(sum.getFriend().getChatMode()).thenReturn(c);
+							
+							sum.notifyPresenceObservers();
 							Thread.sleep(2000);
-							sum.onMessage(sum, "boop");
-						} catch (Exception e) {
+						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					}
-
-				});
+					}}});
+					
+				
 		t.start();
 
 	}
