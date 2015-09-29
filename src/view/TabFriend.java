@@ -13,6 +13,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import model.Summoner;
 
+import com.github.theholywaffle.lolchatapi.ChatMode;
+
 public class TabFriend extends Tab{
 
 	private final Summoner summoner;
@@ -43,31 +45,41 @@ public class TabFriend extends Tab{
 		textGraphic.setFill(Color.BLACK);
 	}
 	
-	public void setAvailable() {
-		circleGraphic.setFill(Color.GREEN);
-	}
-	
-	public void setUnavailable() {
-		circleGraphic.setFill(Color.RED);
-	}
-	
 	public void updatePresence() {
-		System.out.println(summoner.getName() + " is PRESENCED");
+		//System.out.println(summoner.getName() + " is PRESENCED" + summoner.isOnline());
+		if (summoner.isOnline()) {
+			switch (summoner.getChatMode()) {
+				case AVAILABLE:
+					circleGraphic.setFill(Color.GREEN);
+					break;
+				case AWAY:
+					circleGraphic.setFill(Color.YELLOW);
+					break;
+				case BUSY: 
+					circleGraphic.setFill(Color.RED);
+					break;
+				default:
+					circleGraphic.setFill(Color.GRAY);
+			}
+			
+		} else{
+			circleGraphic.setFill(Color.GREY);
+		}
 	}
 
 	public TabFriend(Summoner summoner) {
 		this.summoner = summoner;	
 
-		this.setOnSelectionChanged((Event value) 
+		setOnSelectionChanged((Event value) 
 				-> (((TabFriend) value.getTarget()).clearMessageNotification()));						
 		
-		this.setId("abc");
-
-		this.messageList = new Text(10, 20, "");
+		messageList = new Text(10, 20, "");
 		
 		summoner.registerPresenceObserver(this::updatePresence);
 		
 		circleGraphic = new Circle(0, 0, 5, Color.GREY);
+		updatePresence();
+		
 		textGraphic = new Text(" " + summoner.getName());
 		HBox graphicBox = new HBox();
 		graphicBox.getChildren().add(circleGraphic);
