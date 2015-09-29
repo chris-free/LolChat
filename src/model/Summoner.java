@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import com.github.theholywaffle.lolchatapi.ChatMode;
+import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 public class Summoner {
@@ -44,6 +46,18 @@ public class Summoner {
 	
 	public String getName() {
 		return friend.getName();
+	}
+	
+	public boolean isOnline() {
+		return friend.isOnline();
+	}
+	
+	public LolStatus getStatus() {
+		return friend.getStatus();
+	}
+	
+	public ChatMode getChatMode() {
+		return friend.getChatMode();
 	}
 	
 }
