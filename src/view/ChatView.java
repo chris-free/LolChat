@@ -36,38 +36,6 @@ public class ChatView {
 		return scene;
 	}
 
-	static class ColorRectCell extends ListCell<Summoner> {
-		
-		private Text textName = new Text();
-		
-		private Text textStatus = new Text();
-		
-		public void updatePresence(Summoner summoner) {
-			LolStatus lolStatus = summoner.getStatus();
-			GameStatus queue = lolStatus.getGameStatus();
-			if(summoner.isOnline() && queue != null) {
-				System.out.println(summoner.getName() + queue.toString() + " " + queue.internal());
-				if (queue == GameStatus.IN_GAME) {
-				} 
-				textName.setText(summoner.getName() + " - " + queue.internal());
-			}
-		}
-		
-		@Override
-		public void updateItem(Summoner summoner, boolean empty) {
-			super.updateItem(summoner, empty);
-			if (summoner != null) {
-				System.out.println("list updateItem" + summoner.getName());
-				summoner.registerPresenceObserver(() -> updatePresence(summoner));
-				HBox box = new HBox();
-				textName.setText(summoner.getName());
-				box.getChildren().add(textName);
-				box.getChildren().add(textStatus);
-				setGraphic(textName);
-			}
-		}
-	}
-
 	public ChatView(Api lolApi) {
 		TabPane tabPane = new TabPane();
 		ListView<Summoner> listView = new ListView<Summoner>();
@@ -83,7 +51,7 @@ public class ChatView {
 						if (message != null) {
 							System.out.println(message);
 							Platform.runLater(() -> {
-								TabFriend tab = tabWrapper.get(summoner);
+								SummonerTab tab = tabWrapper.get(summoner);
 								tab.incomingMessage(summoner.getName(), message);
 							});
 						}});
@@ -94,7 +62,7 @@ public class ChatView {
 		listView.setCellFactory(new Callback<ListView<Summoner>, ListCell<Summoner>>() {
 			@Override 
 			public ListCell<Summoner> call(ListView<Summoner> list) {
-				return new ColorRectCell();
+				return new SummonerCell();
 			}});
 
 		Group root = new Group();
@@ -114,7 +82,7 @@ public class ChatView {
 					@Override
 					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
 						if (t1 != null) {
-							Summoner selectedFriend =  ((TabFriend) t1).getSummoner();
+							Summoner selectedFriend =  ((SummonerTab) t1).getSummoner();
 							listWrapper.select(selectedFriend);
 						}
 

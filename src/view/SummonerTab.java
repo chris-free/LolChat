@@ -15,7 +15,7 @@ import model.Summoner;
 
 import com.github.theholywaffle.lolchatapi.ChatMode;
 
-public class TabFriend extends Tab{
+public class SummonerTab extends Tab {
 
 	private final Summoner summoner;
 
@@ -67,11 +67,11 @@ public class TabFriend extends Tab{
 		}
 	}
 
-	public TabFriend(Summoner summoner) {
+	public SummonerTab(Summoner summoner) {
 		this.summoner = summoner;	
 
 		setOnSelectionChanged((Event value) 
-				-> (((TabFriend) value.getTarget()).clearMessageNotification()));						
+				-> (((SummonerTab) value.getTarget()).clearMessageNotification()));						
 		
 		messageList = new Text(10, 20, "");
 		

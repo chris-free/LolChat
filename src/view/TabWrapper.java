@@ -12,21 +12,21 @@ public class TabWrapper {
 		this.tabPane = tabPane;
 	}
 
-	public TabFriend get(Summoner f) {
+	public SummonerTab get(Summoner f) {
 		return contains(f) ? find(f) : create(f);
 	}
 
-	private TabFriend create(Summoner f) {
-		TabFriend t = new TabFriend(f);
+	private SummonerTab create(Summoner f) {
+		SummonerTab t = new SummonerTab(f);
 		tabPane.getTabs().add(t);
 		return t;
 	}
 
-	private TabFriend find(Summoner f) {
-		return (TabFriend) tabPane
+	private SummonerTab find(Summoner f) {
+		return (SummonerTab) tabPane
 				.getTabs()
 				.stream()
-				.filter(t -> ((TabFriend) t).getSummoner().getUserId() == f.getUserId())
+				.filter(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId())
 				.findFirst()
 				.get();
 	}
@@ -35,7 +35,7 @@ public class TabWrapper {
 		return tabPane
 				.getTabs()
 				.stream()
-				.anyMatch(t -> ((TabFriend) t).getSummoner().getUserId() == f.getUserId());
+				.anyMatch(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId());
 	}
 
 	public void select(Summoner f) {
