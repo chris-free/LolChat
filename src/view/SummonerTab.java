@@ -22,46 +22,46 @@ public class SummonerTab extends Tab {
 	private final Text messageList;
 
 	private final Circle circleGraphic;
-	
+
 	private final Text textGraphic;
-	
+
 	public Summoner getSummoner() {
 		return summoner;
 	}
-	
+
 	public void incomingMessage(String userName, String message) {
 		if (!isSelected()) {
 			textGraphic.setFill(Color.ORANGE);
 		}
-		
+
 		messageList.setText(messageList.getText() 
 				+ "\n"
 				+ userName
 				+ ": " 
 				+ message); 
 	}
-	
+
 	public void clearMessageNotification() {
 		textGraphic.setFill(Color.BLACK);
 	}
-	
+
 	public void updatePresence() {
-		//System.out.println(summoner.getName() + " is PRESENCED" + summoner.isOnline());
+		System.out.println(summoner.getName() + " is PRESENCED" + summoner.isOnline());
 		if (summoner.isOnline()) {
-			switch (summoner.getChatMode()) {
-				case AVAILABLE:
+			ChatMode chatMode = summoner.getChatMode();
+			if (chatMode != null) {
+				if (chatMode == ChatMode.AVAILABLE) 
 					circleGraphic.setFill(Color.GREEN);
-					break;
-				case AWAY:
+				else if (chatMode == ChatMode.AWAY) 
 					circleGraphic.setFill(Color.YELLOW);
-					break;
-				case BUSY: 
+				else if (chatMode == ChatMode.BUSY) 
 					circleGraphic.setFill(Color.RED);
-					break;
-				default:
+				else 
 					circleGraphic.setFill(Color.GRAY);
 			}
-			
+			else {
+				circleGraphic.setFill(Color.GRAY);
+			}
 		} else{
 			circleGraphic.setFill(Color.GREY);
 		}
@@ -72,21 +72,21 @@ public class SummonerTab extends Tab {
 
 		setOnSelectionChanged((Event value) 
 				-> (((SummonerTab) value.getTarget()).clearMessageNotification()));						
-		
+
 		messageList = new Text(10, 20, "");
-		
+
 		summoner.registerPresenceObserver(this::updatePresence);
-		
+
 		circleGraphic = new Circle(0, 0, 5, Color.GREY);
 		updatePresence();
-		
+
 		textGraphic = new Text(" " + summoner.getName());
 		HBox graphicBox = new HBox();
 		graphicBox.getChildren().add(circleGraphic);
 		graphicBox.getChildren().add(textGraphic);
 		setGraphic(graphicBox);
-		
-		
+
+
 		HBox chatBox = new HBox();
 
 		TextArea chatTextArea = new TextArea();
