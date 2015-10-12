@@ -84,6 +84,12 @@ public class MockApi implements Api {
 			when(status.getGameStatus()).thenReturn(q);
 		}
 		
+		for(int i = 0; i< 40; i++) {
+			for(Friend sum: arraylist) {
+				summoners.add(new MockSummoner(sum));
+			}
+		}
+		
 		
 		
 		Thread t = new Thread(new Runnable(){
