@@ -3,19 +3,20 @@ package presenter;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Api;
-import model.MockApi;
+import model.LolApi;
 import view.ChatView;
 import view.LoginView;
+import view.ResetView;
 
 public class Presenter {
 	private Stage primaryStage;
 	private Api model;
-	
+
 	public Presenter(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.model = new MockApi();
+		this.model = new LolApi();
 	}
-	
+
 	public void launch () {
 		primaryStage.setTitle("LoL Chat");
 		LoginView loginFactory = new LoginView(this::login);

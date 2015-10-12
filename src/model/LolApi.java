@@ -14,7 +14,7 @@ import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
 import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
-public class LoLApi implements Api{
+public class LolApi implements Api{
 
 	private  LolChat api;
 	
@@ -45,7 +45,7 @@ public class LoLApi implements Api{
 		}
 	}
 
-	public LoLApi() {
+	public LolApi() {
 		api = new LolChat(ChatServer.EUW, FriendRequestPolicy.MANUAL, new RiotApiKey("RIOT-API-KEY", RateLimit.DEFAULT));
 
 		api.setFriendRequestListener(new FriendRequestListener() {
