@@ -31,6 +31,10 @@ public class Summoner {
 		friend.setChatListener((Friend friend, String message) ->  listener.accept(this, message));
 	}
 	
+	public void removePresenceObserver(Runnable o) {
+		presenceConsumers.remove(o);
+	}
+	
 	public void sendMessage(String message) {
 		friend.sendMessage(message);
 		System.out.println("sending " + message);

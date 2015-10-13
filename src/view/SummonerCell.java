@@ -13,11 +13,19 @@ import com.github.theholywaffle.lolchatapi.LolStatus.GameStatus;
 
 class SummonerCell extends ListCell<Summoner> {
 
-	private Text textName = new Text();
+	private Text textName;
 
-	private Circle statusCircle = new Circle(0, 0, 5, Color.GREY);
+	private Circle statusCircle;
+	
+	private Summoner sum;
+	
+	private Runnable listener;
 
 	public void updatePresence(Summoner summoner) {
+		if (!sum.getName().equals(summoner.getName())) {
+			System.out.println(sum.getName() + " given when registered as " + summoner.getName());
+			return;
+		}
 		if(summoner.isOnline()) {
 				ChatMode chatMode = summoner.getChatMode();
 				if (chatMode != null) {
@@ -48,19 +56,40 @@ class SummonerCell extends ListCell<Summoner> {
 	@Override
 	public void updateItem(Summoner summoner, boolean empty) {
 		super.updateItem(summoner, empty);
-	    if(empty) {
+		
+	    if (empty) {
+//	    	System.out.println("empty" + sum.getName() + " : " + summoner.getName());
 	        setGraphic(null);
 	        setText(null);
 	      }
-	    else if (summoner != null) {
-		//	System.out.println("list updateItem" + summoner.getName());
-			summoner.registerPresenceObserver(() -> updatePresence(summoner));
+	    else if (this.sum == summoner) {
+			return;
+		}
+		else if (this.sum != summoner) {
+			if (sum != null) {
+	    	System.out.println("creating new cell" + sum.getName() + " : " + summoner.getName());
+			} else if (summoner != null){
+		    	System.out.println("creating new cell" +  " : " + summoner.getName());
+			} else{
+				System.out.println("new cell");
+			}
+	    	if (listener != null) {
+				this.sum.removePresenceObserver(listener);
+				listener = null;
+			}
+			this.sum = summoner;
+			listener = () -> updatePresence(summoner);
+			summoner.registerPresenceObserver(listener);
 			HBox box = new HBox();
+			textName = new Text();
 			textName.setText(summoner.getName());
+			statusCircle = new Circle(0, 0, 5, Color.GREY);
 			box.getChildren().add(statusCircle);
 			box.getChildren().add(textName);
 			setGraphic(box);
 			updatePresence(summoner);
+			
 		}
+	    
 	}
 }
