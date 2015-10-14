@@ -55,6 +55,28 @@ public class ChatView {
 								tab.incomingMessage(summoner.getName(), message);
 							});
 						}});
+			
+			sum.registerPresenceObserver(()
+					-> { 
+						java.util.Collections.sort(listView.getItems(), new java.util.Comparator<Summoner>() {
+						    @Override
+						    public int compare(Summoner o1, Summoner o2) {
+						    	// Negative is n1 < n2, Zero n1 == n2, Positive n1 > n2
+						    	// Need to compare for online AND name
+						    	if ((o1.isOnline() && o2.isOnline()) || (!o1.isOnline() && !o2.isOnline())) {
+						    		// Sort alphabetically
+						    		return o1.getName().compareTo(o2.getName());
+						    	} else {
+						    		if (o1.isOnline()) {
+						    			return -1;
+						    		} else{
+						    			return 1;
+						    		}
+						    	}
+						    }
+						});
+						System.out.println(1);
+					});
 		};
 
 		listView.setItems(FXCollections.observableArrayList(summoners));
