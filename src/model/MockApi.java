@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import javafx.application.Platform;
+
 import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.LolStatus.GameStatus;
@@ -84,11 +86,11 @@ public class MockApi implements Api {
 			when(status.getGameStatus()).thenReturn(q);
 		}
 		
-		for(int i = 0; i< 40; i++) {
+		/*for(int i = 0; i< 40; i++) {
 			for(Friend sum: arraylist) {
 				summoners.add(new MockSummoner(sum));
 			}
-		}
+		}*/
 		
 		
 		
@@ -107,7 +109,8 @@ public class MockApi implements Api {
 							
 							when(sum.getFriend().getChatMode()).thenReturn(c);
 							
-							sum.notifyPresenceObservers();
+							Platform.runLater(() -> {
+							sum.notifyPresenceObservers();});
 							Thread.sleep(2000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
