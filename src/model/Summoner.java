@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 
@@ -11,7 +12,7 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 public class Summoner {
 
 	protected Friend friend;
-	private List <Runnable> presenceConsumers = new ArrayList<Runnable>();
+	private List <Runnable> presenceConsumers = Collections.synchronizedList(new ArrayList<Runnable>());
 	
 	public Summoner(Friend friend) {
 		this.friend = friend;
