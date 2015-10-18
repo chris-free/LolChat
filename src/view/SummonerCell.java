@@ -17,17 +17,13 @@ class SummonerCell extends ListCell<Summoner> {
 
 	private Circle statusCircle;
 	
-	private Summoner sum;
+	private Summoner summoner;
 	
 	private Runnable listener;
 
-	public void updatePresence(Summoner summoner) {
-		if (!sum.getName().equals(summoner.getName())) {
-			System.out.println(sum.getName() + " given when registered as " + summoner.getName());
-			return;
-		}
-		if(summoner.isOnline()) {
-				ChatMode chatMode = summoner.getChatMode();
+	public void updatePresence() {
+		if(this.summoner.isOnline()) {
+				ChatMode chatMode = this.summoner.getChatMode();
 				if (chatMode != null) {
 					if (chatMode == ChatMode.AVAILABLE) 
 						statusCircle.setFill(Color.GREEN);
@@ -42,11 +38,11 @@ class SummonerCell extends ListCell<Summoner> {
 					statusCircle.setFill(Color.GRAY);
 				}
 
- 			LolStatus lolStatus = summoner.getStatus();
+ 			LolStatus lolStatus = this.summoner.getStatus();
 			GameStatus queue = lolStatus.getGameStatus();
 			if(queue != null) {
-				System.out.println(summoner.getName() + queue.toString() + " " + queue.internal());
-				textName.setText(summoner.getName() + " - " + queue.internal());
+				System.out.println(this.summoner.getName() + queue.toString() + " " + queue.internal());
+				textName.setText(this.summoner.getName() + " - " + queue.internal());
 			}
 		} else {
 			statusCircle.setFill(Color.GRAY);
@@ -58,27 +54,24 @@ class SummonerCell extends ListCell<Summoner> {
 		super.updateItem(summoner, empty);
 		
 	    if (empty) {
-//	    	System.out.println("empty" + sum.getName() + " : " + summoner.getName());
+	    	if (listener != null) {
+				this.summoner.removePresenceObserver(listener);
+				listener = null;
+			}
+	    	this.summoner = null;
 	        setGraphic(null);
 	        setText(null);
 	      }
-	    else if (this.sum == summoner) {
+	    else if (this.summoner == summoner) {
 			return;
 		}
-		else if (this.sum != summoner) {
-			if (sum != null) {
-	    	System.out.println("creating new cell" + sum.getName() + " : " + summoner.getName());
-			} else if (summoner != null){
-		    	System.out.println("creating new cell" +  " : " + summoner.getName());
-			} else{
-				System.out.println("new cell");
-			}
+		else if (this.summoner != summoner) {
 	    	if (listener != null) {
-				this.sum.removePresenceObserver(listener);
+				this.summoner.removePresenceObserver(listener);
 				listener = null;
 			}
-			this.sum = summoner;
-			listener = () -> updatePresence(summoner);
+			this.summoner = summoner;
+			listener = () -> updatePresence();
 			summoner.registerPresenceObserver(listener);
 			HBox box = new HBox();
 			textName = new Text();
@@ -87,8 +80,7 @@ class SummonerCell extends ListCell<Summoner> {
 			box.getChildren().add(statusCircle);
 			box.getChildren().add(textName);
 			setGraphic(box);
-			updatePresence(summoner);
-			
+			updatePresence();
 		}
 	    
 	}
