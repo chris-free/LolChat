@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+import com.github.theholywaffle.lolchatapi.wrapper.FriendGroup;
 
 public class Summoner {
 
@@ -45,7 +46,11 @@ public class Summoner {
 	public Friend getFriend() {
 		return friend;
 	}
-
+	public String getGroupName() {
+		FriendGroup group = friend.getGroup();
+		return group.getName();
+	}
+	
 	public String getUserId() {
 		return friend.getUserId();
 	}
