@@ -71,7 +71,7 @@ class SummonerCell extends ListCell<Summoner> {
 				listener = null;
 			}
 			this.summoner = summoner;
-			listener = () -> updatePresence();
+			listener = this::updatePresence;
 			summoner.registerPresenceObserver(listener);
 			HBox box = new HBox();
 			textName = new Text();
