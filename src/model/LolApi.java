@@ -13,6 +13,7 @@ import com.github.theholywaffle.lolchatapi.listeners.FriendRequestListener;
 import com.github.theholywaffle.lolchatapi.riotapi.RateLimit;
 import com.github.theholywaffle.lolchatapi.riotapi.RiotApiKey;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+import com.github.theholywaffle.lolchatapi.wrapper.FriendGroup;
 
 public class LolApi implements Api{
 
@@ -43,6 +44,10 @@ public class LolApi implements Api{
 		} else {
 			return false;
 		}
+	}
+	
+	public Map<String, List<Summoner>> getSummonersByGroup() {
+		return summoners.values().stream().collect(Collectors.groupingBy(Summoner::getGroupName));
 	}
 
 	public LolApi() {

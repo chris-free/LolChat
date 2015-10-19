@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -138,6 +139,11 @@ public class MockApi implements Api {
 	public void reset() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Map<String, List<Summoner>> getSummonersByGroup() {
+		return summoners.stream().collect(Collectors.groupingBy(Summoner::getGroupName));
 	}
 
 }
