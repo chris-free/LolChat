@@ -3,10 +3,9 @@ package presenter;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Api;
-import model.LolApi;
+import model.MockApi;
 import view.ChatView;
 import view.LoginView;
-import view.ResetView;
 
 public class Presenter {
 	private Stage primaryStage;
@@ -14,7 +13,7 @@ public class Presenter {
 
 	public Presenter(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		this.model = new LolApi();
+		this.model = new MockApi();
 	}
 
 	public void launch () {

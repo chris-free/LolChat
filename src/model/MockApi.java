@@ -14,8 +14,8 @@ import javafx.application.Platform;
 import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.LolStatus.GameStatus;
-import com.github.theholywaffle.lolchatapi.LolStatus.Queue;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+import com.github.theholywaffle.lolchatapi.wrapper.FriendGroup;
 
 
 public class MockApi implements Api {
@@ -87,6 +87,22 @@ public class MockApi implements Api {
 			when(status.getGameStatus()).thenReturn(q);
 		}
 		
+
+		List<String> listGroups = new ArrayList<String>();
+		listGroups.add("Default");
+		listGroups.add("Duo");
+		listGroups.add("Ranked");
+		listGroups.add("Friends");
+		
+		
+		for (Friend f: arraylist) {
+			Random ran = new Random();
+			String group = listGroups.get(ran.nextInt(listGroups.size()));
+			FriendGroup fgroup = mock(FriendGroup.class);
+			when(fgroup.getName()).thenReturn(group);
+			when(f.getGroup()).thenReturn(fgroup);
+		}
+		
 		/*for(int i = 0; i< 40; i++) {
 			for(Friend sum: arraylist) {
 				summoners.add(new MockSummoner(sum));
@@ -94,7 +110,7 @@ public class MockApi implements Api {
 		}*/
 		
 		
-		
+		/*
 		Thread t = new Thread(new Runnable(){
 			
 			public void run() {
@@ -120,7 +136,7 @@ public class MockApi implements Api {
 					}}});
 					
 				
-		t.start();
+		t.start();*/
 
 	}
 

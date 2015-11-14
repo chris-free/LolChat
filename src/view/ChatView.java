@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -12,17 +13,14 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import model.Api;
 import model.Summoner;
-
-import com.github.theholywaffle.lolchatapi.LolStatus;
-import com.github.theholywaffle.lolchatapi.LolStatus.GameStatus;
-import com.github.theholywaffle.lolchatapi.LolStatus.Queue;
 
 public class ChatView {
 
@@ -61,7 +59,7 @@ public class ChatView {
 						java.util.Collections.sort(listView.getItems(), new java.util.Comparator<Summoner>() {
 						    @Override
 						    public int compare(Summoner o1, Summoner o2) {
-						    	if ((o1.isOnline() && o2.isOnline()) || (!o1.isOnline() && !o2.isOnline())) {
+						    	if (o1.isOnline() == o2.isOnline()) {
 						    		return o1.getName().compareTo(o2.getName());
 						    	} else {
 						    		if (o1.isOnline()) {
@@ -113,7 +111,19 @@ public class ChatView {
 		borderPane.prefHeightProperty().bind(scene.heightProperty());
 		borderPane.prefWidthProperty().bind(scene.widthProperty());
 		borderPane.setCenter(tabPane);
-		borderPane.setRight(listView);      
+		
+		GridPane grid = new GridPane();
+		int rowIndex = 0;
+		for (Entry<String, List<Summoner>> entry: lolApi.getSummonersByGroup().entrySet()) {
+			String groupName = entry.getKey();
+			List <Summoner> listFriend = entry.getValue();
+			
+			TitledPane t = new TitledPane(groupName, new Text(listFriend.get(0).getName()));
+			grid.add(t, 0, rowIndex);
+			rowIndex++;
+		}
+		
+		borderPane.setRight(grid);      
 
 		root.getChildren().add(borderPane);
 	}
