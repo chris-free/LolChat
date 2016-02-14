@@ -71,7 +71,7 @@ public class SummonerTab extends Tab {
 		this.summoner = summoner;	
 
 		setOnSelectionChanged((Event value) 
-				-> (((SummonerTab) value.getTarget()).clearMessageNotification()));						
+				-> ((SummonerTab) value.getTarget()).clearMessageNotification());						
 
 		messageList = new Text(10, 20, "");
 
