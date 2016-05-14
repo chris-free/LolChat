@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.Api;
 import model.Summoner;
+import presenter.Chat;
 
 public class ResetView {
 	
@@ -19,7 +20,7 @@ public class ResetView {
 		
 		reset = () -> {
 			model.reset();
-			ChatView viewChat = new ChatView(model);
+			Chat viewChat = new Chat(model);
 			Scene scene = viewChat.getScene();
 			primaryStage.close(); // Needs otherwise doesn't switch properly, instead can remove/add from the root
 			primaryStage.setScene(scene);

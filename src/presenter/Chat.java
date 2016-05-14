@@ -1,4 +1,4 @@
-package view;
+package presenter;
 
 import java.util.List;
 import java.util.Map.Entry;
@@ -21,12 +21,11 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import model.Api;
 import model.Summoner;
+import view.chat.SummonerTab;
 
-public class ChatView {
+public class Chat {
 
-	private ListWrapper listWrapper;
-
-	private TabWrapper tabWrapper;
+	private TabPane tabPane;
 
 	private Scene scene;
 
@@ -34,12 +33,40 @@ public class ChatView {
 		return scene;
 	}
 
-	public ChatView(Api lolApi) {
-		TabPane tabPane = new TabPane();
-		ListView<Summoner> listView = new ListView<Summoner>();
+	private SummonerTab tabGet(Summoner f) {
+		return tabContains(f) ? tabFind(f) : tabCreate(f);
+	}
 
-		this.listWrapper = new ListWrapper(listView);
-		this.tabWrapper = new TabWrapper(tabPane);
+	private SummonerTab tabCreate(Summoner f) {
+		SummonerTab t = new SummonerTab(f);
+		tabPane.getTabs().add(t);
+		return t;
+	}
+
+	private SummonerTab tabFind(Summoner f) {
+		return (SummonerTab) tabPane
+				.getTabs()
+				.stream()
+				.filter(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId())
+				.findFirst()
+				.get();
+	}
+
+	private boolean tabContains(Summoner f) {
+		return tabPane
+				.getTabs()
+				.stream()
+				.anyMatch(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId());
+	}
+
+	private void tabSelect(Summoner f) {
+		Tab tab = tabGet(f);
+		tabPane.getSelectionModel().select(tab);
+	}
+	
+	public Chat(Api lolApi) {
+		tabPane = new TabPane();
+		ListView<Summoner> listView = new ListView<Summoner>();
 
 		List <Summoner> summoners = lolApi.getSummoners();
 
@@ -49,7 +76,7 @@ public class ChatView {
 						if (message != null) {
 							System.out.println(message);
 							Platform.runLater(() -> {
-								SummonerTab tab = tabWrapper.get(summoner);
+								SummonerTab tab = tabGet(summoner);
 								tab.incomingMessage(summoner.getName(), message);
 							});
 						}});
@@ -89,7 +116,7 @@ public class ChatView {
 		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected) 
 				-> {
 					if (selected != null) {
-						tabWrapper.select(selected);
+						tabSelect(selected);
 					}
 				});
 
@@ -99,7 +126,7 @@ public class ChatView {
 					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
 						if (t1 != null) {
 							Summoner selectedFriend =  ((SummonerTab) t1).getSummoner();
-							listWrapper.select(selectedFriend);
+							listView.getSelectionModel().select(selectedFriend);
 						}
 
 					}

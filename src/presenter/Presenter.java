@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Api;
 import model.MockApi;
-import view.ChatView;
 import view.LoginView;
 
 public class Presenter {
@@ -26,7 +25,7 @@ public class Presenter {
 	
 	public boolean login(String userName, String password) {
 		if (model.login(userName, password)) {
-			ChatView viewChat = new ChatView(model);
+			Chat viewChat = new Chat(model);
 			Scene scene = viewChat.getScene();
 			primaryStage.close(); // Needs otherwise doesn't switch properly, instead can remove/add from the root
 			primaryStage.setScene(scene);

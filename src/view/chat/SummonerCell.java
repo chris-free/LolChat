@@ -1,4 +1,4 @@
-package view;
+package view.chat;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
