@@ -1,7 +1,6 @@
 package presenter;
 
 import java.util.List;
-import java.util.Map.Entry;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -13,14 +12,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.util.Callback;
 import model.Api;
 import model.Summoner;
+import view.SummonerCell;
 import view.chat.SummonerTab;
 
 public class Chat {
@@ -138,7 +135,7 @@ public class Chat {
 		borderPane.prefHeightProperty().bind(scene.heightProperty());
 		borderPane.prefWidthProperty().bind(scene.widthProperty());
 		borderPane.setCenter(tabPane);
-		
+		/*
 		GridPane grid = new GridPane();
 		int rowIndex = 0;
 		for (Entry<String, List<Summoner>> entry: lolApi.getSummonersByGroup().entrySet()) {
@@ -149,8 +146,8 @@ public class Chat {
 			grid.add(t, 0, rowIndex);
 			rowIndex++;
 		}
-		
-		borderPane.setRight(grid);      
+*/		
+		borderPane.setRight(listView);      
 
 		root.getChildren().add(borderPane);
 	}

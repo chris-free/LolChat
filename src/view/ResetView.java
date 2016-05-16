@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import model.Api;
-import model.Summoner;
 import presenter.Chat;
 
 public class ResetView {
