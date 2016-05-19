@@ -40,103 +40,88 @@ public class Chat {
 	}
 
 	private SummonerTab tabFind(Summoner f) {
-		return (SummonerTab) tabPane
-				.getTabs()
-				.stream()
-				.filter(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId())
-				.findFirst()
-				.get();
+		return (SummonerTab) tabPane.getTabs().stream()
+				.filter(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId()).findFirst().get();
 	}
 
 	private boolean tabContains(Summoner f) {
-		return tabPane
-				.getTabs()
-				.stream()
-				.anyMatch(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId());
+		return tabPane.getTabs().stream().anyMatch(t -> ((SummonerTab) t).getSummoner().getUserId() == f.getUserId());
 	}
 
 	private void tabSelect(Summoner f) {
 		Tab tab = tabGet(f);
 		tabPane.getSelectionModel().select(tab);
 	}
-	
+
 	public Chat(Api lolApi) {
 		Group root = new Group();
 		scene = new Scene(root, 400, 250, Color.WHITE);
-		
+
 		tabPane = new TabPane();
 		ListView<Summoner> listView = new ListView<Summoner>();
 
-		List <Summoner> summoners = lolApi.getSummoners();
+		List<Summoner> summoners = lolApi.getSummoners();
 
 		listView.setItems(FXCollections.observableArrayList(summoners));
 		listView.setPrefSize(200, 250);
 		listView.setCellFactory(new Callback<ListView<Summoner>, ListCell<Summoner>>() {
-			@Override 
+			@Override
 			public ListCell<Summoner> call(ListView<Summoner> list) {
 				return new SummonerCell();
-			}});
+			}
+		});
 
-
-		listView.getSelectionModel()
-		.selectedItemProperty()
-		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected) 
-				-> {
-					if (selected != null) {
+		listView.getSelectionModel().selectedItemProperty().addListener(
+				(ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected) -> {
+					if (selected != null) 
 						tabSelect(selected);
-					}
 				});
 
-		tabPane.getSelectionModel().selectedItemProperty().addListener(
-				new ChangeListener<Tab>() {
-					@Override
-					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-						if (t1 != null) {
-							Summoner selectedFriend =  ((SummonerTab) t1).getSummoner();
-							listView.getSelectionModel().select(selectedFriend);
-						}
-
-					}
+		tabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+			@Override
+			public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+				if (t1 != null) {
+					Summoner selectedFriend = ((SummonerTab) t1).getSummoner();
+					listView.getSelectionModel().select(selectedFriend);
 				}
-				);
 
+			}
+		});
 
 		for (Summoner sum : summoners) {
-			sum.registerChatObserver((Summoner summoner, String message)
-					-> {
-						if (message != null) {
-							System.out.println(message);
-							Platform.runLater(() -> {
-								SummonerTab tab = tabGet(summoner);
-								tab.incomingMessage(summoner.getName(), message);
-							});
-						}});
-			
-			sum.registerPresenceObserver(()
-					-> { 
-						java.util.Collections.sort(listView.getItems(), new java.util.Comparator<Summoner>() {
-						    @Override
-						    public int compare(Summoner o1, Summoner o2) {
-						    	if (o1.isOnline() == o2.isOnline()) {
-						    		return o1.getName().compareTo(o2.getName());
-						    	} else {
-						    		if (o1.isOnline()) {
-						    			return -1;
-						    		} else{
-						    			return 1;
-						    		}
-						    	}
-						    }
-						});
+			sum.registerChatObserver((Summoner summoner, String message) -> {
+				if (message != null) {
+					System.out.println(message);
+					Platform.runLater(() -> {
+						SummonerTab tab = tabGet(summoner);
+						tab.incomingMessage(summoner.getName(), message);
 					});
+				}
+			});
+
+			sum.registerPresenceObserver(() -> {
+				java.util.Collections.sort(listView.getItems(), new java.util.Comparator<Summoner>() {
+					@Override
+					public int compare(Summoner o1, Summoner o2) {
+						if (o1.isOnline() == o2.isOnline()) {
+							return o1.getName().compareTo(o2.getName());
+						} else {
+							if (o1.isOnline()) {
+								return -1;
+							} else {
+								return 1;
+							}
+						}
+					}
+				});
+			});
 		};
-		
-		
+
 		BorderPane borderPane = new BorderPane();
 		borderPane.prefHeightProperty().bind(scene.heightProperty());
 		borderPane.prefWidthProperty().bind(scene.widthProperty());
 		borderPane.setCenter(tabPane);
-		borderPane.setRight(listView);      
+		borderPane.setRight(listView);
 
 		root.getChildren().add(borderPane);
 	}
