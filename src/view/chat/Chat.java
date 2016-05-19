@@ -1,4 +1,4 @@
-package presenter;
+package view.chat;
 
 import java.util.List;
 
@@ -18,7 +18,6 @@ import javafx.util.Callback;
 import model.Api;
 import model.Summoner;
 import view.SummonerCell;
-import view.chat.SummonerTab;
 
 public class Chat {
 

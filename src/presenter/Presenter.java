@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import model.Api;
 import model.LolApi;
 import view.LoginView;
+import view.chat.Chat;
 
 public class Presenter {
 	private Stage primaryStage;
