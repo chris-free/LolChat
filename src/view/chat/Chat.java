@@ -61,10 +61,45 @@ public class Chat {
 	}
 	
 	public Chat(Api lolApi) {
+		Group root = new Group();
+		scene = new Scene(root, 400, 250, Color.WHITE);
+		
 		tabPane = new TabPane();
 		ListView<Summoner> listView = new ListView<Summoner>();
 
 		List <Summoner> summoners = lolApi.getSummoners();
+
+		listView.setItems(FXCollections.observableArrayList(summoners));
+		listView.setPrefSize(200, 250);
+		listView.setCellFactory(new Callback<ListView<Summoner>, ListCell<Summoner>>() {
+			@Override 
+			public ListCell<Summoner> call(ListView<Summoner> list) {
+				return new SummonerCell();
+			}});
+
+
+		listView.getSelectionModel()
+		.selectedItemProperty()
+		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected) 
+				-> {
+					if (selected != null) {
+						tabSelect(selected);
+					}
+				});
+
+		tabPane.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<Tab>() {
+					@Override
+					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+						if (t1 != null) {
+							Summoner selectedFriend =  ((SummonerTab) t1).getSummoner();
+							listView.getSelectionModel().select(selectedFriend);
+						}
+
+					}
+				}
+				);
+
 
 		for (Summoner sum : summoners) {
 			sum.registerChatObserver((Summoner summoner, String message)
@@ -95,57 +130,12 @@ public class Chat {
 						});
 					});
 		};
-
-		listView.setItems(FXCollections.observableArrayList(summoners));
-		listView.setPrefSize(200, 250);
-		listView.setCellFactory(new Callback<ListView<Summoner>, ListCell<Summoner>>() {
-			@Override 
-			public ListCell<Summoner> call(ListView<Summoner> list) {
-				return new SummonerCell();
-			}});
-
-		Group root = new Group();
-		scene = new Scene(root, 400, 250, Color.WHITE);
-
-		listView.getSelectionModel()
-		.selectedItemProperty()
-		.addListener((ObservableValue<? extends Summoner> oValue, Summoner previousSelected, Summoner selected) 
-				-> {
-					if (selected != null) {
-						tabSelect(selected);
-					}
-				});
-
-		tabPane.getSelectionModel().selectedItemProperty().addListener(
-				new ChangeListener<Tab>() {
-					@Override
-					public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-						if (t1 != null) {
-							Summoner selectedFriend =  ((SummonerTab) t1).getSummoner();
-							listView.getSelectionModel().select(selectedFriend);
-						}
-
-					}
-				}
-				);
-
-
+		
+		
 		BorderPane borderPane = new BorderPane();
 		borderPane.prefHeightProperty().bind(scene.heightProperty());
 		borderPane.prefWidthProperty().bind(scene.widthProperty());
 		borderPane.setCenter(tabPane);
-		/*
-		GridPane grid = new GridPane();
-		int rowIndex = 0;
-		for (Entry<String, List<Summoner>> entry: lolApi.getSummonersByGroup().entrySet()) {
-			String groupName = entry.getKey();
-			List <Summoner> listFriend = entry.getValue();
-			
-			TitledPane t = new TitledPane(groupName, new Text(listFriend.get(0).getName()));
-			grid.add(t, 0, rowIndex);
-			rowIndex++;
-		}
-*/		
 		borderPane.setRight(listView);      
 
 		root.getChildren().add(borderPane);

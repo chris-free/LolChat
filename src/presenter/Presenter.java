@@ -26,8 +26,8 @@ public class Presenter {
 	
 	public boolean login(String userName, String password) {
 		if (model.login(userName, password)) {
-			Chat viewChat = new Chat(model);
-			Scene scene = viewChat.getScene();
+			Chat chatFactory = new Chat(model);
+			Scene scene = chatFactory.getScene();
 			primaryStage.close(); // Needs otherwise doesn't switch properly, instead can remove/add from the root
 			primaryStage.setScene(scene);
 			primaryStage.show();
